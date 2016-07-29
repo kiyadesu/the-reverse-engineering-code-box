@@ -1,0 +1,13 @@
+#log输出string类型数据,vx为数据，根据需要更改
+	invoke-static {vx}, Lcom/debug;->v_str(Ljava/lang/String;)V
+	
+#文本形式写入string数据到sd卡，文件名为1s.txt
+    invoke-static {vx}, Lcom/debug;->txt_str(Ljava/lang/String;)V
+	
+#log输出int类型数据
+    invoke-static {vx}, Lcom/debug;->v_int(I)V
+
+#文本形式写入int数据到sd卡，文件名为1i.txt
+    invoke-static {vx}, Lcom/debug;->txt_int(I)V
+	
+#注：根据需要将未用到的删除就行
