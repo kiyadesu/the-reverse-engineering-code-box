@@ -6,18 +6,30 @@ import sys
 #私钥加密
 def pri_encrypt(msg, file_name):
     rsa_pri = M2Crypto.RSA.load_key(file_name)
-    ctxt_pri = rsa_pri.private_encrypt(msg, M2Crypto.RSA.pkcs1_padding)   #这里的方法选择加密填充方式，所以在解密的时候 要对应。
-    ctxt64_pri = ctxt_pri.encode('base64')  #密文是base64  方便保存 encode成str
-    print ('密文:%s'% ctxt64_pri)
-    return ctxt64_pri
+    
+    output = ''
+    while msg:
+        input = msg[:117]
+        msg = msg[117:]
+        out = rsa_pri.private_encrypt(input, M2Crypto.RSA.pkcs1_padding) #解密
+        output = output + out
+    output64 = output.encode('base64')
+    print('密文:\n%s' % output64)
+    return output64
 
 #公钥加密
 def pub_encrypt(msg, file_name):
-    rsa_pri = M2Crypto.RSA.load_pub_key(file_name)
-    ctxt_pri = rsa_pri.public_encrypt(msg, M2Crypto.RSA.pkcs1_padding)   #这里的方法选择加密填充方式，所以在解密的时候 要对应。
-    ctxt64_pri = ctxt_pri.encode('base64')  #密文是base64  方便保存 encode成str
-    print ('密文:%s'% ctxt64_pri)
-    return ctxt64_pri
+    rsa_pub = M2Crypto.RSA.load_pub_key(file_name)
+       
+    output = ''
+    while msg:
+        input = msg[:117]
+        msg = msg[117:]
+        out = rsa_pub.public_encrypt(input, M2Crypto.RSA.pkcs1_padding) #解密
+        output = output + out
+    output64 = output.encode('base64')
+    print('密文:\n%s' % output64)
+    return output64
 
 #公钥解密
 def pub_decrypt_with_pubkeyfile(msg, file_name):
